@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Book Store</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preload" href="assets/book1.pdf" as="fetch" crossorigin>
+</head>
+<body>
+  <header>
+    <h1>📚 Book Store</h1>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <button id="settingsBtn" aria-label="Settings">⚙️</button>
+      <button id="favoritesBtn" aria-label="Show Favorites">❤️</button>
+    </div>
+  </header>
+  <main>
+    <section id="bookGrid" class="book-grid">
+      <!-- Books rendered by JS -->
+    </section>
+  </main>
+
+  <!-- Favorites Modal -->
+  <div id="favoritesModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal" data-close="favoritesModal">&times;</button>
+      <h2>Favorites</h2>
+      <div id="favoritesList"></div>
+    </div>
+  </div>
+
+  <!-- Book Detail Modal -->
+  <div id="bookDetailModal" class="modal hidden">
+    <div class="modal-content detail-modal">
+      <button class="close-modal" data-close="bookDetailModal">&times;</button>
+      <div id="bookDetailContent"></div>
+    </div>
+  </div>
+
+  <!-- Flipbook Modal -->
+  <div id="flipbookModal" class="modal hidden flipbook-modal">
+    <div class="modal-content flipbook-content">
+      <button class="close-modal" data-close="flipbookModal">&times;</button>
+      <div id="flipbookPrompt" class="flipbook-prompt"></div>
+      <div id="flipbookContainer"></div>
+    </div>
+  </div>
+
+  <!-- Author Books Modal -->
+  <div id="authorBooksModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal" data-close="authorBooksModal">&times;</button>
+      <h2>Books by Author</h2>
+      <div id="authorBooksList"></div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content settings-modal-content">
+      <button class="close-modal" data-close="settingsModal">&times;</button>
+      <h2 style="margin-bottom:1.5rem;">Settings</h2>
+      <div class="settings-row">
+        <label class="switch">
+          <input type="checkbox" id="performanceModeToggle" />
+          <span class="slider"></span>
+        </label>
+        <span class="settings-label">Performance Mode<br>
+          <span class="settings-desc">Lightweight, disables animations and effects</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reader Modal -->
+  <div id="readerModal" class="modal hidden">
+    <div class="modal-content reader-modal-content">
+      <iframe id="readerIframe" style="flex:1;width:100%;border:none;border-radius:12px;min-height:400px;background:#18181a;"></iframe>
+      <button id="fullscreenReaderBtn" class="reader-action-btn" aria-label="Fullscreen" title="Fullscreen">⛶</button>
+      <button class="close-modal reader-action-btn" data-close="readerModal" aria-label="Close" title="Close">&times;</button>
+    </div>
+  </div>
+
+  <!-- TODO: Add a search bar for books in the future -->
+
+  <script src="https://cdn.jsdelivr.net/npm/stpageflip@2.0.5/dist/pageflip.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

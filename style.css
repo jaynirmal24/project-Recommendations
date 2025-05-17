@@ -1,0 +1,641 @@
+/* Main color variables */
+:root {
+  --bg: #18181a;
+  --surface: #232326;
+  --accent: #0a84ff;
+  --text: #f5f5f7;
+  --muted: #a1a1aa;
+  --shadow: 0 4px 32px rgba(0,0,0,0.45);
+  --radius: 18px;
+  --transition: 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+/* Base styles */
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'SF Pro Display', 'Inter', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Header styles */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 2rem 1rem 2rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+button {
+  background: var(--surface);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.7em 1.2em;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+  outline: none;
+}
+button:active {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(0.97);
+}
+
+#favoritesBtn {
+  font-size: 1.5rem;
+  background: none;
+  box-shadow: none;
+  padding: 0.3em 0.6em;
+}
+
+/* Book grid and card styles */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted min width for better responsiveness */
+  gap: 1.5rem; /* Reduced gap for a tighter layout */
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.book-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem; /* Reduced padding for a compact look */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  min-height: 320px; /* Adjusted height for consistency */
+  text-align: center; /* Centered text for better alignment */
+  padding-top: 1.5rem;
+  box-sizing: border-box;
+}
+.book-card:hover {
+  transform: translateY(-4px) scale(1.02); /* Subtle hover effect */
+  box-shadow: 0 6px 24px rgba(10, 132, 255, 0.15);
+}
+
+.book-cover {
+  width: 100px; /* Adjusted size for better layout */
+  height: 140px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.8rem;
+  background: #222;
+}
+
+.book-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.3rem 0;
+}
+
+.book-lang-file {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+/* Adjust Language and File Type layout */
+.book-lang {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.book-file-type {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.card-actions {
+  display: none !important;
+}
+
+.favorite-btn {
+  background: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  transition: color var(--transition);
+}
+.favorite-btn.favorited {
+  color: #ff375f;
+  text-shadow: 0 2px 8px #ff375f44;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed; /* Ensure the modal is fixed */
+  inset: 0; /* Cover the entire viewport */
+  background: rgba(24, 24, 26, 0.85); /* Slightly darker background for better focus */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity var(--transition);
+  backdrop-filter: blur(10px); /* Increased blur for better focus */
+}
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem; /* Adjusted padding for consistency */
+  min-width: 320px;
+  max-width: 90vw; /* Ensure responsiveness */
+  max-height: 85vh; /* Prevent overflow */
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes modalIn {
+  from { transform: translateY(30px) scale(0.95); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  color: var(--muted);
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: color var(--transition);
+}
+.close-modal:hover { color: var(--accent); }
+
+#favoritesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.fav-book-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: #232326cc;
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+.fav-book-cover {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #222;
+}
+.fav-book-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.fav-book-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Book detail modal styles */
+.detail-modal {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center-align content horizontally */
+  gap: 1.5rem; /* Add spacing between elements */
+  min-width: 340px;
+  max-width: 700px;
+  text-align: center; /* Center-align text */
+}
+
+.detail-cover {
+  width: 160px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  background: #222;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center; /* Center-align content */
+}
+
+.detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.detail-meta {
+  color: var(--muted);
+  font-size: 0.98rem;
+  margin-bottom: 0.7rem;
+}
+
+.detail-lang-file {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.detail-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center; /* Center-align buttons */
+}
+
+/* Adjust modal content for smaller screens */
+@media (max-width: 700px) {
+  .detail-modal {
+    padding: 1rem;
+  }
+  .detail-cover {
+    width: 140px;
+    height: 200px;
+  }
+}
+
+/* Author Books Modal */
+#authorBooksModal .modal-content {
+  max-width: 600px;
+  padding: 1.5rem;
+}
+
+#authorBooksList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.author-book-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.author-book-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.author-book-cover {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #222;
+}
+
+.author-book-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.author-book-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Flipbook modal styles */
+.flipbook-modal {
+  background: rgba(24, 24, 26, 0.9); /* Slightly darker for better focus */
+}
+.flipbook-content {
+  padding: 0;
+  min-width: 320px;
+  max-width: 95vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--radius);
+}
+#flipbookPrompt {
+  margin: 1.2rem 0 0.5rem 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+  text-align: center;
+}
+#flipbookContainer {
+  width: 90vw;
+  max-width: 900px;
+  height: 70vh;
+  margin: 0 auto 2rem auto;
+  background: #18181a;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+
+/* Favorite badge styles */
+.fav-badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  background: #ffd600;
+  color: #222;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  padding: 0.2em 0.8em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  cursor: pointer;
+  z-index: 2;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+.fav-badge-inner {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+
+/* Author badge styles */
+.author-badge {
+  display: inline-block;
+  margin: 0.7rem 0 0.5rem 0;
+  background: #009cff;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.2em 1.1em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  letter-spacing: 0.2px;
+  transition: background 0.2s, color 0.2s;
+}
+.author-badge:hover {
+  background: #007ad6;
+}
+
+/* Reader modal styles */
+.reader-modal-content {
+  max-width: 900px;
+  width: 95vw;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 !important;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.reader-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem 1.2rem 1.2rem;
+  background: transparent;
+  width: 100%;
+}
+
+.reader-action-btn {
+  background: #232326;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 0.2rem;
+  transition: background 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.reader-action-btn:hover {
+  background: #0a84ff;
+  color: #fff;
+}
+
+.reader-modal-content .reader-action-btn {
+  position: absolute;
+  width: 40px; /* Make the button square */
+  height: 40px; /* Make the button square */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px; /* Optional: Add slight rounding */
+  background-color: #232326;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.18s;
+}
+
+.reader-modal-content .reader-action-btn:hover {
+  background-color: #0a84ff;
+}
+
+.reader-modal-content .reader-action-btn#fullscreenReaderBtn {
+  bottom: 10px;
+  left: 10px;
+}
+
+.reader-modal-content .reader-action-btn.close-modal {
+  bottom: 10px;
+  right: 10px;
+  background-color: #ff375f;
+}
+
+.reader-modal-content .reader-action-btn.close-modal:hover {
+  background-color: #ff1744;
+}
+
+.reader-modal-content .close-modal {
+  position: static;
+  font-size: 2rem;
+  background: #232326;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-left: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.18s;
+  z-index: 1;
+}
+.reader-modal-content .close-modal:hover {
+  background: #ff375f;
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  background: #232326;
+}
+::-webkit-scrollbar-thumb {
+  background: #18181a;
+  border-radius: 8px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .detail-modal, #bookDetailContent {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+  .flipbook-content {
+    min-width: 0;
+    padding: 0.5rem;
+  }
+  #flipbookContainer {
+    width: 98vw;
+    height: 60vh;
+  }
+}
+
+/* Performance Mode: disables transitions, shadows, blur, and animations */
+.performance-mode * {
+  transition: none !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+.performance-mode .modal,
+.performance-mode .flipbook-modal {
+  backdrop-filter: none !important;
+  background: #18181a !important;
+}
+
+.performance-mode .modal-content,
+.performance-mode .flipbook-content,
+.performance-mode .book-card,
+.performance-mode .fav-book-item,
+.performance-mode .author-book-item,
+.performance-mode .fav-badge,
+.performance-mode .author-badge,
+.performance-mode .collection-btn,
+.performance-mode .book-cover,
+.performance-mode .fav-book-cover,
+.performance-mode .author-book-cover {
+  box-shadow: none !important;
+}
+
+/* Settings Modal Modern Styles */
+.settings-modal-content {
+  min-width: 320px;
+  max-width: 400px;
+  padding: 2.2rem 2rem 2rem 2rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+.settings-label {
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+.settings-desc {
+  font-size: 0.93rem;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 0.1em;
+}
+
+/* Modern Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #444;
+  border-radius: 34px;
+  transition: background 0.2s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.switch input:checked + .slider {
+  background: var(--accent);
+}
+.switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* TODO: Add dark/light theme toggle in the future */
