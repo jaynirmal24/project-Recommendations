@@ -1,7 +1,9 @@
 # project-Recommendations
 Hackathon
 
--Idea Chosen.
+---
+
+## Idea Chosen.
 Book list with genre filter and favorites toggle.
 Random activity generator with categories.
 Movie card list with like buttons and hover zoom.
